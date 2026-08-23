@@ -6,10 +6,10 @@ cross-repository change even though it touches one file here.
 
 #: Kafka topic settlement events are published on. Consumed by
 #: celmis-demo-billing and celmis-demo-gateway.
-SETTLEMENT_TOPIC = "payments.settlement.v2"
+SETTLEMENT_TOPIC = "payments.settlement.v3"
 
 #: Internal ledger write endpoint.
-LEDGER_ENDPOINT = "/internal/v3/ledger"
+LEDGER_ENDPOINT = "/internal/v4/ledger"
 
 #: How long a failed settlement waits before the next attempt.
 RETRY_BACKOFF_SECONDS = (1, 5, 30, 120)
