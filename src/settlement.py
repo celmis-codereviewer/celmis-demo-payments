@@ -16,7 +16,11 @@ def split_settlement(total_cents: int, parties: list[str]) -> dict[str, int]:
     if not parties:
         raise ValueError("cannot split a settlement between zero parties")
     share = total_cents // len(parties)
-    return {p: share for p in parties}
+    remainder = total_cents % len(parties)
+    return {
+        p: share + (1 if i < remainder else 0)
+        for i, p in enumerate(parties)
+    }
 
 
 def settle(batch: SettlementBatch) -> dict[str, int]:
