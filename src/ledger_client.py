@@ -1,5 +1,7 @@
 """Writes settled amounts to the internal ledger."""
 
+import time
+
 import requests
 
 from src.config import LEDGER_ENDPOINT, RETRY_BACKOFF_SECONDS
@@ -15,7 +17,9 @@ class LedgerClient:
         url = f"{self.base_url}{LEDGER_ENDPOINT}"
         payload = {"batch_id": batch_id, "entries": entries}
         last_error = None
-        for delay in RETRY_BACKOFF_SECONDS:
+        for attempt in range(len(RETRY_BACKOFF_SECONDS)):
+            if attempt > 0:
+                time.sleep(RETRY_BACKOFF_SECONDS[attempt - 1])
             try:
                 r = requests.post(
                     url, json=payload,
